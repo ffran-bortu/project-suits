@@ -1,0 +1,32 @@
+## EXAMPLE: Character Data Template
+
+character_name = "Arden"
+primary_class = [Load warrior_class.tres]
+secondary_class = [Load tank_class.tres]
+hidden_class = null
+
+# Progression
+using_primary = true
+primary_level = 1
+secondary_level = 1
+hidden_level = 1
+
+# Current Stats (calculated from class)
+current_hp = 25
+max_hp = 25
+str = 6
+mag = 1
+spd = 4
+skill_stat = 5
+luck = 4
+def = 5
+res = 2
+
+# Unique Skills
+unique_skill_names = []  # Add "Lone Wolf" for solo bonus
+
+# Bonds (starts empty)
+bond_levels = {}
+bond_points = {}
+s_or_aplus_partner = ""
+unlocked_conversations = {}

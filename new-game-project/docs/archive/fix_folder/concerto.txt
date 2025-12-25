@@ -1,0 +1,48 @@
+Fire Emblem Tactical RPG: Master Development HandbookEngine: Godot 4.x | Language: GDScript | Focus: Analysis, Standards & Refactoring1. Core Coding StandardsPhilosophy: This codebase requires strict adherence to type safety and data-driven design. We prioritize preventive maintenance over reactive bug fixing.1.1 Type Safety (Mandatory)All code must use strict static typing. This provides a 10-30% performance improvement and prevents runtime errors.The Standard:✅ Correct:GDScriptvar unit_manager: UnitManager = null
+var deployed_units: Array[Unit] = []
+
+func calculate_damage(attacker: Node, defender: Node) -> int:
+    return 0
+❌ Incorrect:GDScriptvar unit_manager = null 
+var deployed_units = [] 
+func calculate_damage(attacker, defender): # Missing return type
+1.2 Naming ConventionsStrict enforcement of naming ensures consistency across the team.TypeConventionExampleClassesPascalCaseCharacterData, BondSystemFilessnake_casecharacter_data.gd, unit_manager.gdVariablessnake_casebond_points, current_healthConstantsUPPER_SNAKEPOINTS_FOR_C, MAX_LEVELFunctionssnake_casecalculate_damage(), _on_ready()Signalssnake_caseunit_died, support_unlockedEnumsPascalCaseBondRank, TileState1.3 Constants Over Magic NumbersNever use hardcoded numbers in logic. Extract them to GameConfig (global) or class-level constants.Refactoring Pattern:Identify: if bond_points >= 50:Extract: const POINTS_FOR_C: int = 50Replace: if bond_points >= POINTS_FOR_C:2. Architecture & Systems2.1 File Organization & StructureMaintain the following directory structure:Plaintextscripts/
+├── Core/          # Core systems (Turn system, Grid)
+├── Managers/      # Singleton-like managers (PhaseManager)
+├── Resources/     # Resource definitions (CharacterData)
+├── Units/         # Unit logic (Solo/Duo)
+├── UI/            # UI Controllers
+└── scenes/        # (.tscn files)
+Scene vs. Script Decision:Use Scenes (.tscn): UI panels, Units, Visual Effects.Use Scripts (.gd): Managers, Resources, Autoloads, Pure Logic.2.2 Data-Driven Design (Resources)Do not use Dictionaries for game data. Use typed Resource classes.Current Resources: CharacterData, CharacterClass, Weapon, SupportConversation, MapData.2.3 Communication PatternsDependency Injection: Never use get_node() paths for systems. Inject dependencies via setup() or set_dependencies() methods.Signals: Use signals for cross-system communication. Never access nodes directly across hierarchy branches.Key Signals: unit_health_changed, phase_changed, bond_updated.2.4 Optimization: Dirty FlagsDo not update visuals every frame in _process. Use "Dirty Flags" to update only when data changes.GDScriptvar _state_dirty: bool = false
+var state: TileState:
+    set(value):
+        if state != value:
+            state = value
+            _state_dirty = true # Flag change
+
+func _process(_delta: float) -> void:
+    if _state_dirty:
+        _update_visual_state() # Update once
+        _state_dirty = false
+3. Workflows: Refactoring & Maintenance3.1 Safety & Verification WorkflowBefore committing any code or finishing a refactor, execute this checklist:Automated Scan: Run godot --headless --check-only --path "." to verify the entire project compiles.Script Validation: Check individual scripts if needed: godot --headless --check-only --script "path/to/script.gd".Linter Check: Ensure no warnings exist in the debugger.Save/Load Verify: Ensure any new data persists correctly.3.2 Common Pitfalls & ChecksA. Memory Management (Tweens)Always kill existing tweens before creating new ones to prevent memory leaks.GDScriptif selection_tween and selection_tween.is_valid():
+    selection_tween.kill()
+selection_tween = create_tween()
+B. Error Handling (100% Coverage)Every function must validate inputs.Check for null references immediately.Check array.is_empty() before iterating.Check has_method() before calling dynamic functions.Validate load() and instantiate() results.C. Array BoundsAlways validate indices before accessing arrays (e.g., Dialogue lines, Grid positions).3.3 Git WorkflowIgnored Files: .godot/, *.translation, export_presets.cfg.Commit Messages: Use semantic prefixes (feat:, fix:, refactor:, docs:).4. Refactoring GuideUse this guide when optimizing or cleaning existing code.4.1 Refactoring PrioritiesCritical (High): Security issues, performance bottlenecks, major duplication, missing type hints.Architectural (Medium): Breaking up oversized files (>500 lines), improving modularization.Cleanup (Low): Code style, minor optimizations.4.2 Handling Oversized FilesIf a file exceeds 500 lines or mixes concerns (e.g., UI and Logic):Identify Sections: Group related functions.Extract: Move logic to a new Manager or Helper script.Delegate: The original file should call the new script's methods.4.3 Code Analysis ChecklistWhen reviewing code, look for:High Complexity: Nested loops or excessive recursion.Duplication: Identical logic in multiple files (extract to shared module).Coupling: Tight dependencies between unrelated modules.Unused Assets: Dead variables, imports, or functions.5. Performance TargetsFrame Rate: 60 FPS minimum.Frame Time: < 16ms (ideal), < 100ms (absolute max).RAM: < 500MB.Save/Load: < 1 second.Optimization Checklist:[ ] Dirty flags used for UI/Visuals.[ ] Enemy AI batched (don't process all in one frame).[ ] Expensive calculations cached.[ ] Projectiles/Effects use object pooling.6. Appendices (Specific Constraints & Test Cases)Appendix A: Enforced Lists & Restrictions1. Allowed Autoloads (Minimal Use)GridManager (Global grid system)SignalBus (Event system)GameConfig (Configuration constants)DebugLog (Logging utility)2. Strict Usage RulesUse Scenes (.tscn) for: UI Panels (PrepScreen, SupportViewer), Units (Unit, DuoUnit), Visual Effects.Use Scripts (.gd) for: Managers (UnitManager), Resources (CharacterData, Weapon), Autoloads.Appendix B: Critical Edge-Case Test MatrixA. Duo Unit Logic[ ] What happens if a Duo unit splits while at 0 HP?[ ] What happens if the split target position is occupied or impassable?[ ] What happens if one of the character data slots is null?B. Bond System[ ] What happens if add_bond_points() is called with negative points?[ ] What happens if you try to bond a character to themselves?[ ] Does the system correctly block a new S-Rank if one already exists?C. Prep Screen[ ] What happens if the deployment limit is 0?[ ] What happens if the character roster is empty?[ ] Does it crash if the unit selection panel scene fails to load?D. Support Viewer[ ] What happens if a conversation has 0 dialogue lines?[ ] What happens if a dialogue line is an empty string?Appendix C: Reporting Templates1. Project Analysis Report TemplateMarkdown## PROJECT ANALYSIS REPORT
+### 1. CRITICAL ISSUES (High Priority)
+- [ ] **Issue**: [Brief description]
+  - **Location**: [File(s):Line(s)]
+  - **Problem**: [Detailed explanation]
+  - **Recommendation**: [Specific fix]
+
+### 2. CODE DUPLICATION
+- [ ] **Duplicated Functionality**: [Function name]
+  - **Locations**: [List of files]
+  - **Suggested Refactor**: [Create shared module]
+2. Refactor Log TemplateMarkdown# Refactor Log - [System Name]
+**Date**: [Date] | **Files Modified**: [Count]
+
+## Changes Made
+### 1. [Change Type]
+- **File**: [Filename]
+- **Impact**: [What changed]
+- **Benefit**: [Performance/Safety gain]

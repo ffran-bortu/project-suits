@@ -1,0 +1,78 @@
+[gd_scene load_steps=2 format=3 uid="uid://combat_forecast_ui_uuid"]
+
+[ext_resource type="Script" path="res://scripts/UI/combat_forecast.gd" id="1_script"]
+
+[node name="CombatForecast" type="Panel"]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -200.0
+offset_top = -100.0
+offset_right = 200.0
+offset_bottom = 100.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="HBox" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Attackerstats" type="VBoxContainer" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="Label" parent="HBox/Attackerstats"]
+layout_mode = 2
+text = "Attacker"
+
+[node name="HP" type="Label" parent="HBox/Attackerstats"]
+layout_mode = 2
+text = "HP: 20 -> 15"
+
+[node name="Dmg" type="Label" parent="HBox/Attackerstats"]
+layout_mode = 2
+text = "Dmg: 5"
+
+[node name="Hit" type="Label" parent="HBox/Attackerstats"]
+layout_mode = 2
+text = "Hit: 85%"
+
+[node name="Crit" type="Label" parent="HBox/Attackerstats"]
+layout_mode = 2
+text = "Crit: 3%"
+
+[node name="VS" type="Label" parent="HBox"]
+layout_mode = 2
+text = "VS"
+
+[node name="DefenderStats" type="VBoxContainer" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="Name" type="Label" parent="HBox/DefenderStats"]
+layout_mode = 2
+text = "Defender"
+
+[node name="HP" type="Label" parent="HBox/DefenderStats"]
+layout_mode = 2
+text = "HP: 20 -> 15"
+
+[node name="Dmg" type="Label" parent="HBox/DefenderStats"]
+layout_mode = 2
+text = "Dmg: 5"
+
+[node name="Hit" type="Label" parent="HBox/DefenderStats"]
+layout_mode = 2
+text = "Hit: 85%"
+
+[node name="Crit" type="Label" parent="HBox/DefenderStats"]
+layout_mode = 2
+text = "Crit: 3%"

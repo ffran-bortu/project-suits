@@ -1,0 +1,33 @@
+# cursor_controller_hover_functions.gd
+# Temporary file with hover detection functions to append
+
+## Check if cursor is hovering over a unit and emit signals
+func _check_unit_hover() -> void:
+	var unit_at_cursor: Unit = _get_unit_at_position(grid_position)
+	
+	# If unit changed (or went from unit to no unit, or vice versa)
+	if unit_at_cursor != _last_hovered_unit:
+		# Unhover previous unit
+		if _last_hovered_unit:
+			unit_unhovered.emit()
+		
+		# Hover new unit
+		_last_hovered_unit = unit_at_cursor
+		if unit_at_cursor:
+			unit_hovered.emit(unit_at_cursor)
+
+
+## Helper to get unit at grid position
+## @param pos: Grid position to check
+## @return: Unit at position or null
+func _get_unit_at_position(pos: Vector2i) -> Unit:
+	# Get UnitManager from main scene
+	var main_node = get_tree().get_first_node_in_group("main")
+	if not main_node or not main_node.has_node("UnitManager"):
+		return null
+	
+	var unit_manager = main_node.get_node("UnitManager")
+	if unit_manager and unit_manager.has_method("get_unit_at_position"):
+		return unit_manager.get_unit_at_position(pos)
+	
+	return null

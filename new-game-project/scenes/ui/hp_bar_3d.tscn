@@ -1,0 +1,30 @@
+[gd_scene load_steps=2 format=3 uid="uid://hp_bar_3d_scene"]
+
+[ext_resource type="Script" path="res://scripts/UI/hp_bar_3d.gd" id="1_hpbar"]
+
+[node name="HPBar3D" type="Node3D"]
+visible = true
+script = ExtResource("1_hpbar")
+
+[node name="HPBarBackground" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+visible = true
+billboard = 1
+billboard_keep_scale = true
+axis = 2
+pixel_size = 0.01
+modulate = Color(0.2, 0.2, 0.2, 1)
+scale = Vector3(10, 2, 1)
+render_priority = 0
+
+[node name="HPBar" type="Sprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0.01)
+visible = true
+billboard = 1
+billboard_keep_scale = true
+axis = 2
+pixel_size = 0.01
+modulate = Color(0, 1, 0, 1)
+scale = Vector3(10, 2, 1)
+render_priority = 1
+

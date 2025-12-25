@@ -1,0 +1,6 @@
+[gd_scene load_steps=2 format=3 uid="uid://test_unit_viz_001"]
+
+[ext_resource type="Script" path="res://scripts/Tests/test_unit_visibility.gd" id="1_script"]
+
+[node name="TestUnitVisibility" type="Node3D"]
+script = ExtResource("1_script")

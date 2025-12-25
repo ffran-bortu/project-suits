@@ -1,0 +1,25 @@
+[gd_scene format=3 uid="uid://testmapinspiration1"]
+
+[ext_resource type="PackedScene" path="res://assets/Maps/test_arena.tscn" id="1_arena"]
+[ext_resource type="PackedScene" path="res://scenes/unit.tscn" id="2_knight"]
+[ext_resource type="PackedScene" path="res://scenes/unit_archer.tscn" id="3_archer"]
+[ext_resource type="PackedScene" path="res://scenes/unit_mage.tscn" id="4_mage"]
+
+[node name="TestMap" type="Node3D"]
+
+[node name="Arena" parent="." instance=ExtResource("1_arena")]
+
+[node name="Knight" parent="." instance=ExtResource("2_knight")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+
+[node name="Knight2" parent="." instance=ExtResource("2_knight")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 2)
+
+[node name="Archer" parent="." instance=ExtResource("3_archer")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 2, 1.5, 0)
+
+[node name="Mage" parent="." instance=ExtResource("4_mage")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 1.5, 0)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 10, 10)

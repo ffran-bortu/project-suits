@@ -1,0 +1,74 @@
+[gd_scene load_steps=8 format=3 uid="uid://155xx7s6y6ta"]
+
+[ext_resource type="Script" uid="uid://d05rphe42pwov" path="res://scripts/Main/main.gd" id="1_sugp2"]
+[ext_resource type="Script" uid="uid://dhx5mllhp5vap" path="res://scripts/Managers/unit_manager.gd" id="2_jyhfs"]
+[ext_resource type="Script" uid="uid://ey0lfjjlpl42" path="res://scripts/UI/state_display.gd" id="3_tbgi4"]
+[ext_resource type="Script" path="res://scripts/Visual/grid_3d.gd" id="4_grid3d"]
+[ext_resource type="Script" path="res://scripts/Map/simple_terrain.gd" id="5_terrain"]
+[ext_resource type="Script" path="res://scripts/Visual/camera_controller.gd" id="8_camera"]
+[ext_resource type="Script" path="res://scripts/Managers/phase_manager.gd" id="10_phase"]
+[ext_resource type="Script" path="res://scripts/Managers/combat_manager.gd" id="11_combat"]
+[ext_resource type="PackedScene" path="res://scenes/action_menu.tscn" id="9_action_menu"]
+[ext_resource type="PackedScene" uid="uid://b5dsaebbf3amd" path="res://scenes/cursor.tscn" id="6_cursor"]
+[ext_resource type="PackedScene" uid="uid://bju2jqmppdttm" path="res://scenes/unit.tscn" id="7_unit"]
+
+[node name="Main" type="Node3D"]
+script = ExtResource("1_sugp2")
+
+[node name="GameManager" type="Node" parent="."]
+
+[node name="UnitManager" type="Node" parent="GameManager"]
+script = ExtResource("2_jyhfs")
+
+[node name="PhaseManager" type="Node" parent="GameManager"]
+script = ExtResource("10_phase")
+
+[node name="CombatManager" type="Node" parent="GameManager"]
+script = ExtResource("11_combat")
+
+[node name="UICanvas" type="CanvasLayer" parent="."]
+
+[node name="StateDisplay" type="Label" parent="UICanvas"]
+modulate = Color(0.2920013, 0.7375741, 0, 1)
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 163.0
+offset_bottom = 33.0
+text = "State:PLAYER_TURN"
+script = ExtResource("3_tbgi4")
+
+[node name="ActionMenu" parent="UICanvas" instance=ExtResource("9_action_menu")]
+
+[node name="CameraController" type="Node3D" parent="."]
+script = ExtResource("8_camera")
+
+[node name="Camera3D" type="Camera3D" parent="CameraController"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 0)
+projection = 1
+size = 10.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.707107, -0.5, 0.5, 0, 0.707107, 0.707107, -0.707107, -0.5, 0.5, 0, 0, 0)
+shadow_enabled = true
+light_energy = 1.2
+
+[node name="AmbientLight" type="Node3D" parent="."]
+
+[node name="OmniLight3D" type="OmniLight3D" parent="AmbientLight"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 20, 0)
+light_energy = 0.3
+light_color = Color(1, 1, 1, 1)
+
+[node name="World" type="Node3D" parent="."]
+
+[node name="Grid" type="Node3D" parent="World"]
+
+[node name="Grid3D" type="Node3D" parent="World/Grid"]
+script = ExtResource("4_grid3d")
+
+[node name="Terrain" type="Node3D" parent="World"]
+script = ExtResource("5_terrain")
+
+[node name="Cursor" parent="World" instance=ExtResource("6_cursor")]
+
+[node name="Units" type="Node3D" parent="World"]

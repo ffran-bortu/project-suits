@@ -1,0 +1,71 @@
+The Godot Engine "Best Practices" documentation provides a comprehensive guide on structuring projects, writing efficient code, and leveraging the engine's unique node-scene architecture. Below is an in-depth summary of the key subjects covered in this section.
+
+### 1. Object-Oriented Principles & Scene Structure
+Godot relies heavily on Object-Oriented Programming (OOP) principles, but it applies them uniquely through its Scene and Node system.
+* **Scripts as Classes:** A script attached to a node essentially extends that node's functionality. While not technically a class in the traditional sense, it acts like one (defining properties, methods, and signals).
+* **Scenes as Objects:** Scenes should be treated as instantiable objects. A scene defines a collection of nodes, their organization, and their initialization.
+* **Loose Coupling:** Scenes should be designed to have **zero external dependencies**. They should keep their data internal. If a scene needs to interact with an external context (like a player impacting a game world), it should use **Dependency Injection** or **Signals**.
+    * *Bad:* Hardcoding a path like `get_node("../Player")`.
+    * *Good:* Emitting a signal `hit_player` and letting the parent node handle the connection.
+* **Tree Structure:** Games should have a clear entry point (e.g., a `Main` node). Level switching involves swapping children of a "World" node rather than replacing the root entire scene tree, which gives more control over transitions.
+
+### 2. Scenes vs. Scripts
+Deciding whether to build functionality as a `.tscn` (Scene) or a `.gd` (Script) is a common dilemma.
+* **Scenes:** Best for concepts specific to your game (e.g., a custom "Furniture" item or "Enemy"). They are easier to edit visually and safer to track.
+* **Scripts:** Best for generic, reusable tools or data structures (e.g., a generic "StateMachine" class).
+* **Performance:**
+    * **PackedScene:** Instantiating a scene (C++ backend) is generally faster than creating nodes and setting properties purely via GDScript.
+    * **Named Types:** You can register scripts as types using `class_name`. This makes them appear in the "Create Node" dialog, making them easier for designers to use without needing to know the file path.
+
+### 3. Autoloads vs. Internal Nodes
+Autoloads (Singletons) are nodes automatically loaded at the root. While useful, they can lead to "Spaghetti Code" if misused for global state management.
+* **When to use Autoloads:** For systems that must exist globally and independent of the current scene, such as background music managers, input handling layers, or global user settings.
+* **When to avoid them:** Do not use them to manage game state that belongs to a specific level or object. For example, a "BulletManager" should likely be a child of the Level scene, not a global singleton.
+* **Static Variables:** In Godot 4.1+, `static var` in GDScript often eliminates the need for Autoloads just to share data.
+
+### 4. Godot Notifications & Logic
+Godot nodes rely on a notification system to trigger logic.
+* **_process(delta):** Runs every frame. Use for logic that depends on visual frame rate (e.g., UI updates, non-physics animations).
+* **_physics_process(delta):** Runs at a fixed interval. **Must** be used for all physics-body movement and collision checks to ensure consistency.
+* **_input vs _unhandled_input:**
+    * `_input` sees all input events.
+    * `_unhandled_input` is preferred for gameplay (like character movement) so that UI (which consumes input) can block these events.
+* **Initialization:**
+    * `_init()`: Called when the object is created in memory (constructor). Use for non-node setup.
+    * `_enter_tree()`: Called when the node enters the SceneTree.
+    * `_ready()`: Called when the node **and all its children** have entered the tree. This is the safest place to access child nodes (e.g., `$Child`).
+
+### 5. Data Preferences
+Choosing the right data structure impacts performance and maintainability.
+* **Array vs. Dictionary vs. Object:**
+    * **Array:** Fastest for iteration and small collections. Slow for finding specific items (linear search).
+    * **Dictionary:** Fastest for insertion/removal and lookups by key (hash map).
+    * **Object:** Slowest for data storage due to overhead, but essential for encapsulating behavior.
+* **Enums:**
+    * **Int:** Faster comparison (constant time).
+    * **String:** Easier to debug (readable output), but slower comparison (linear time).
+* **Animation Data:**
+    * `AnimatedSprite2D`: Good for simple frame-by-frame animations.
+    * `AnimationPlayer`: Essential for complex animations involving property changes (movement, color, audio) or coordinating multiple nodes.
+
+### 6. Logic Optimization
+* **Loading vs. Preloading:**
+    * `preload("path")`: Loads the resource at parse time (game startup). Use this for constant assets needed immediately.
+    * `load("path")`: Loads when the line of code is executed. Use this to avoid spikes in memory usage during startup, or for assets not always needed.
+* **Node Initialization:** Set properties on a node **before** adding it to the scene tree. Adding a node to the tree triggers many internal calculations; setting properties afterwards triggers them again.
+
+### 7. Project Organization
+A clean file structure prevents "Development Hell."
+* **Folder Structure:** Organize by **context** (feature), not by file type.
+    * *Bad:* `/scripts`, `/scenes`, `/images`
+    * *Good:* `/player` (contains player.gd, player.tscn, player.png), `/levels`, `/gui`
+* **Naming Conventions:**
+    * **Classes/Nodes:** PascalCase (e.g., `PlayerController`, `Sprite2D`)
+    * **Files/Folders:** snake_case (e.g., `player_controller.gd`, `level_01.tscn`). This avoids case-sensitivity issues on Windows vs. Linux/Mac.
+* **Importing:** Use `.gdignore` (an empty file) to tell Godot to ignore specific folders (useful for raw assets like `.psd` or project documentation).
+
+### 8. Version Control (Git)
+Godot is very Git-friendly because scene files (`.tscn`) and resources (`.tres`) are text-based.
+* **Text vs Binary:** Always prefer text-based resource formats for version control to allow merging.
+* **Git LFS:** Use Git Large File Storage for binary assets like `.png`, `.wav`, `.glb`, and `.blend` files to keep the repo size manageable.
+* **Ignore Files:** A standard `.gitignore` for Godot should exclude `.godot/` (the internal cache folder) and `*.translation` (generated binary translation files).

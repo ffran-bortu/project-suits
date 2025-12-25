@@ -1,0 +1,149 @@
+[gd_scene load_steps=2 format=3 uid="uid://unit_selection_panel_scene"]
+
+[ext_resource type="Script" path="res://scripts/UI/unit_selection_panel.gd" id="1"]
+
+[node name="UnitSelectionPanel" type="Panel"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="HSplitContainer" type="HSplitContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="AvailablePanel" type="Panel" parent="HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/AvailablePanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HSplitContainer/AvailablePanel/VBoxContainer"]
+layout_mode = 2
+text = "Army Roster"
+horizontal_alignment = 1
+
+[node name="DeploymentLabel" type="Label" parent="HSplitContainer/AvailablePanel/VBoxContainer"]
+layout_mode = 2
+text = "Deployed: 0/10"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="HSplitContainer/AvailablePanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="UnitListContainer" type="VBoxContainer" parent="HSplitContainer/AvailablePanel/VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="DeploymentPanel" type="Panel" parent="HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="VBoxContainer" type="VBoxContainer" parent="HSplitContainer/DeploymentPanel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="HSplitContainer/DeploymentPanel/VBoxContainer"]
+layout_mode = 2
+text = "Deployment Positions"
+horizontal_alignment = 1
+
+[node name="SpawnGrid" type="GridContainer" parent="HSplitContainer/DeploymentPanel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 4
+
+[node name="UnitDetailsPanel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -400.0
+offset_right = 200.0
+offset_bottom = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+
+[node name="Portrait" type="TextureRect" parent="UnitDetailsPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 200.0
+grow_horizontal = 2
+
+[node name="NameLabel" type="Label" parent="UnitDetailsPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 200.0
+offset_bottom = 240.0
+grow_horizontal = 2
+text = "Character Name"
+horizontal_alignment = 1
+
+[node name="StatsLabel" type="Label" parent="UnitDetailsPanel"]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_top = 240.0
+offset_bottom = 280.0
+grow_horizontal = 2
+text = "HP: 20  STR: 5  MAG: 3"
+horizontal_alignment = 1
+
+[node name="Controls" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -100.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_constants/separation = 10
+
+[node name="FormDuoButton" type="Button" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Form Duo"
+
+[node name="BreakDuoButton" type="Button" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Break Duo"
+
+[node name="DeployButton" type="Button" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Deploy"
+
+[node name="RemoveButton" type="Button" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Remove"
+
+[node name="BackButton" type="Button" parent="Controls"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Back"

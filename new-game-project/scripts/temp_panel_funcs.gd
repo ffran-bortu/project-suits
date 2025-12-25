@@ -1,0 +1,49 @@
+"""
+Status panel integration functions for main.gd
+"""
+
+## Setup character status panel and connect hover signals
+func _setup_status_panel() -> void:
+	# Load and instantiate status panel
+	var status_panel_scene = load("res://scenes/UI/character_status_panel.tscn")
+	if not status_panel_scene:
+		push_warning("Main: Could not load character_status_panel.tscn")
+		return
+	
+	character_status_panel = status_panel_scene.instantiate()
+	if not character_status_panel:
+		push_error("Main: Failed to instantiate character_status_panel")
+		return
+	
+	# Add to UI canvas
+	var ui_canvas_node = get_node_or_null("UICanvas")
+	if ui_canvas_node:
+		ui_canvas_node.add_child(character_status_panel)
+	else:
+		push_error("Main: UICanvas not found!")
+		return
+	
+	# Connect cursor hover signals
+	if cursor_controller:
+		if not cursor_controller.unit_hovered.is_connected(_on_unit_hovered):
+			cursor_controller.unit_hovered.connect(_on_unit_hovered)
+		if not cursor_controller.unit_unhovered.is_connected(_on_unit_unhovered):
+			cursor_controller.unit_unhovered.connect(_on_unit_unhovered)
+
+
+## Handle cursor hovering over a unit
+func _on_unit_hovered(unit: Unit) -> void:
+	if character_status_panel and is_instance_valid(unit):
+		# Create temporary CharacterData from unit stats
+		var temp_char_data = CharacterData.new()
+		temp_char_data.character_name = unit.unit_name
+		temp_char_data.character_id = unit.unit_name.to_lower()
+		
+		# Show panel with unit info
+		character_status_panel.show_character_info(temp_char_data, unit)
+
+
+## Handle cursor leaving a unit
+func _on_unit_unhovered() -> void:
+	if character_status_panel:
+		character_status_panel.hide_panel()

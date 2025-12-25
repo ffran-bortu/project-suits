@@ -1,0 +1,33 @@
+## EXAMPLE: Mage Class Template
+
+class_name = "Mage"
+archetype = 1  # MAGE
+can_be_frontline = false
+can_be_backline = true
+
+# Base Stats - High MAG, low physical
+base_hp = 18
+base_str = 2
+base_mag = 7
+base_spd = 5
+base_skill = 6
+base_luck = 4
+base_def = 2
+base_res = 6
+
+# Backline Bonuses
+backline_mag_bonus = 3
+backline_spd_bonus = 2
+backline_res_bonus = 3
+
+# Growth Rates
+hp_growth = 40
+str_growth = 10
+mag_growth = 60
+spd_growth = 40
+skill_growth = 40
+luck_growth = 30
+def_growth = 20
+res_growth = 50
+
+usable_weapon_types = ["Tome", "Staff"]

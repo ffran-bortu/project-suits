@@ -1,0 +1,46 @@
+## EXAMPLE: Warrior Class
+## Copy this template to create .tres resources in Godot editor
+
+[gd_resource type="Resource" script_class="CharacterClass" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/Resources/character_class.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+class_name = "Warrior"
+archetype = 0  # WARRIOR
+description = "Physical frontline fighter with high STR and DEF"
+can_be_frontline = true
+can_be_backline = false
+
+# Base Stats
+base_hp = 25
+base_str = 6
+base_mag = 1
+base_spd = 4
+base_skill = 5
+base_luck = 4
+base_def = 5
+base_res = 2
+
+# Frontline Bonuses
+frontline_str_bonus = 2
+frontline_def_bonus = 3
+frontline_hp_bonus = 5
+
+# Backline Bonuses (not used)
+backline_mag_bonus = 0
+backline_spd_bonus = 0
+backline_res_bonus = 0
+
+# Growth Rates (%)
+hp_growth = 60
+str_growth = 50
+mag_growth = 10
+spd_growth = 30
+skill_growth = 35
+luck_growth = 35
+def_growth = 40
+res_growth = 20
+
+usable_weapon_types = ["Sword", "Axe"]

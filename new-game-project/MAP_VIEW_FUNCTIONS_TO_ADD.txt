@@ -1,0 +1,37 @@
+# This needs to be manually inserted into prep_screen.gd after line 389
+
+## Enter map view mode  
+func _enter_map_view_mode() -> void:
+	# Hide all prep screen UI
+	for child in get_children():
+		if child is Control:
+			child.visible = false
+	
+	# Allow clicks to pass through
+	mouse_filter = Control.MOUSE_FILTER_IGNORE
+	
+	# Show Press X HUD
+	var hud = PanelContainer.new()
+	hud.name = "MapViewHUD"
+	hud.set_anchors_preset(Control.PRESET_BOTTOM_WIDE)
+	hud.offset_top = -60
+	hud.offset_left = 20
+	hud.offset_right = -20  
+	hud.offset_bottom = -20
+	
+	var label = Label.new()
+	label.text = "Map View - Press X to Return"
+	label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	hud.add_child(label)
+	add_child(hud)
+
+## Exit map view mode
+func _exit_map_view_mode() -> void:
+	var hud = get_node_or_null("MapViewHUD")
+	if hud:
+		hud.queue_free()
+	for child in get_children():
+		if child is Control and child.name != "MapViewHUD":
+			child.visible = true
+	mouse_filter = Control.MOUSE_FILTER_STOP
+	update_help_text("Choose an option to prepare for battle.")

@@ -1,17 +1,38 @@
-[gd_scene load_steps=4 format=3 uid="uid://bju2jqmppdttm"]
+[gd_scene load_steps=5 format=3 uid="uid://bju2jqmppdttm"]
 
-[ext_resource type="Texture2D" uid="uid://bdj0khtq1vv2o" path="res://assets/unit_player.png" id="1_1jvru"]
-[ext_resource type="Script" uid="uid://my8gllpixbml" path="res://scripts/unit.gd" id="1_o7ajc"]
+[ext_resource type="Texture2D" uid="uid://bdj0khtq1vv2o" path="res://assets/Characters/chr_pawn_knight.png" id="1_1jvru"]
+[ext_resource type="Script" uid="uid://my8gllpixbml" path="res://scripts/Units/unit.gd" id="1_o7ajc"]
 [ext_resource type="Texture2D" uid="uid://0a0fpjefmc1j" path="res://assets/selection_ring.png" id="2_gic7v"]
+[ext_resource type="PackedScene" uid="uid://hp_bar_3d_scene" path="res://scenes/ui/hp_bar_3d.tscn" id="4_hpbar3d"]
+[ext_resource type="AnimationLibrary" uid="uid://costume_anims" path="res://assets/Animations/unit_animations.tres" id="6_anims"]
 
-[node name="Unit" type="Node2D"]
+[node name="Unit" type="Node3D"]
 script = ExtResource("1_o7ajc")
 
-[node name="Sprite2D" type="Sprite2D" parent="."]
+[node name="Sprite3D" type="Sprite3D" parent="."]
 texture = ExtResource("1_1jvru")
+billboard = 1
+billboard_keep_scale = true
+axis = 2
+pixel_size = 0.01
+hframes = 1
+vframes = 1
+shaded = false
 
-[node name="SelectionIndicator" type="Sprite2D" parent="."]
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Sprite3D"]
+libraries = {
+"": ExtResource("6_anims")
+}
+
+[node name="SelectionIndicator" type="Sprite3D" parent="."]
 visible = false
 modulate = Color(1, 1, 0, 1)
-scale = Vector2(1.2, 1.2)
+scale = Vector3(1.2, 1.2, 1.2)
 texture = ExtResource("2_gic7v")
+billboard = 1
+billboard_keep_scale = true
+axis = 2
+pixel_size = 0.12
+shaded = false
+
+[node name="HPBar3D" parent="." instance=ExtResource("4_hpbar3d")]

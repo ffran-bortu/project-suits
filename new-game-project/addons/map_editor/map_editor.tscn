@@ -1,0 +1,152 @@
+[gd_scene load_steps=2 format=3 uid="uid://map_editor_scene"]
+
+[ext_resource type="Script" path="res://addons/map_editor/map_editor.gd" id="1_script"]
+
+[node name="MapEditor" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_script")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.15, 0.15, 0.2, 1)
+
+[node name="Toolbar" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 40.0
+grow_horizontal = 2
+theme_override_constants/separation = 10
+
+[node name="Label" type="Label" parent="Toolbar"]
+layout_mode = 2
+text = "Tactical Map Editor"
+vertical_alignment = 1
+
+[node name="Spacer" type="Control" parent="Toolbar"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="BrushMode" type="OptionButton" parent="Toolbar"]
+layout_mode = 2
+custom_minimum_size = Vector2(150, 0)
+
+[node name="SaveButton" type="Button" parent="Toolbar"]
+layout_mode = 2
+text = "Save Map"
+
+[node name="LoadButton" type="Button" parent="Toolbar"]
+layout_mode = 2
+text = "Load Map"
+
+[node name="ClearButton" type="Button" parent="Toolbar"]
+layout_mode = 2
+text = "Clear All"
+
+[node name="PropertyPanel" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 11
+anchor_left = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = 50.0
+grow_horizontal = 0
+grow_vertical = 2
+
+[node name="VBox" type="VBoxContainer" parent="PropertyPanel"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="PropertiesLabel" type="Label" parent="PropertyPanel/VBox"]
+layout_mode = 2
+text = "Map Properties"
+horizontal_alignment = 1
+
+[node name="GridSizeLabel" type="Label" parent="PropertyPanel/VBox"]
+layout_mode = 2
+text = "Grid Size"
+
+[node name="GridSizeX" type="SpinBox" parent="PropertyPanel/VBox"]
+layout_mode = 2
+min_value = 4.0
+max_value = 20.0
+value = 8.0
+suffix = "width"
+
+[node name="GridSizeY" type="SpinBox" parent="PropertyPanel/VBox"]
+layout_mode = 2
+min_value = 4.0
+max_value = 20.0
+value = 8.0
+suffix = "height"
+
+[node name="HSeparator" type="HSeparator" parent="PropertyPanel/VBox"]
+layout_mode = 2
+
+[node name="HeightLabel" type="Label" parent="PropertyPanel/VBox"]
+layout_mode = 2
+text = "Terrain Height"
+
+[node name="HeightValue" type="SpinBox" parent="PropertyPanel/VBox"]
+layout_mode = 2
+min_value = -5.0
+max_value = 5.0
+step = 0.5
+
+[node name="HSeparator2" type="HSeparator" parent="PropertyPanel/VBox"]
+layout_mode = 2
+
+[node name="TeamLabel" type="Label" parent="PropertyPanel/VBox"]
+layout_mode = 2
+text = "Unit Team"
+
+[node name="TeamSelector" type="OptionButton" parent="PropertyPanel/VBox"]
+layout_mode = 2
+
+[node name="HSeparator3" type="HSeparator" parent="PropertyPanel/VBox"]
+layout_mode = 2
+
+[node name="HelpLabel" type="Label" parent="PropertyPanel/VBox"]
+layout_mode = 2
+text = "Controls:
+- Left Click: Paint
+- Drag: Paint continuously
+- Select brush mode above
+
+Terrain: Set height
+Player/Enemy: Place spawn
+Erase: Remove cell"
+autowrap_mode = 3
+
+[node name="GridDisplay" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 10.0
+offset_top = 50.0
+offset_right = -210.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FileDialog" type="FileDialog" parent="."]
+title = "Save Map Logic"
+initial_position = 2
+size = Vector2i(600, 400)
+min_size = Vector2i(200, 70)
+ok_button_text = "Save"
+access = 2
+filters = PackedStringArray("*.txt ; Map Logic File")
+

@@ -1,0 +1,37 @@
+description: Scaffolds a new game feature following V2.0 Project Guidelines (Strict Typing, Co-location, Docs).
+Plan the Feature
+
+Identify the feature name (e.g., TradingSystem).
+Determine the correct directory: scenes/managers/<feature_name>/ or scenes/systems/<feature_name>/.
+Create Directory Structure
+
+Create the directory.
+// turbo
+Run command: mkdir scenes/managers/<feature_name> (adjust path as needed).
+Create the Script (Rule: Strict Typing & Headers)
+
+Create <feature_name>.gd in the new directory.
+MUST Include Documentation Header (File, Purpose, Public API).
+MUST Include class_name <FeatureName>.
+MUST Define _ready() with dependency assertions.
+Create the Scene (Rule: Co-location)
+
+Create <feature_name>.tscn in the SAME directory.
+Attach the script to the root node of the scene.
+Register Global Access (Optional)
+
+If this is a Core Manager, add it to 
+
+main.tscn
+ or 
+
+project.godot
+ (Autoloads).
+Use dependency injection in 
+
+main.gd
+ if it is a child of GameManager.
+Verification
+
+Check that class_name works by referencing it in a test variable.
+Verify no cyclic dependencies are introduced.

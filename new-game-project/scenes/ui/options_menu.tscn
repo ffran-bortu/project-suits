@@ -1,0 +1,213 @@
+[gd_scene load_steps=2 format=3 uid="uid://d3x8j2k4m5n6"]
+
+[ext_resource type="Script" path="res://scripts/UI/options_menu.gd" id="1_options"]
+
+[node name="OptionsMenu" type="Control" node_paths=PackedStringArray("tab_container", "master_slider", "music_slider", "sfx_slider", "window_mode_opt", "vsync_check", "text_speed_slider", "save_button", "close_button")]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_options")
+tab_container = NodePath("Panel/VBoxContainer/TabContainer")
+master_slider = NodePath("Panel/VBoxContainer/TabContainer/Audio/VBoxContainer/Master/HSlider")
+music_slider = NodePath("Panel/VBoxContainer/TabContainer/Audio/VBoxContainer/Music/HSlider")
+sfx_slider = NodePath("Panel/VBoxContainer/TabContainer/Audio/VBoxContainer/SFX/HSlider")
+window_mode_opt = NodePath("Panel/VBoxContainer/TabContainer/Video/VBoxContainer/WindowMode/OptionButton")
+vsync_check = NodePath("Panel/VBoxContainer/TabContainer/Video/VBoxContainer/VSync/CheckBox")
+text_speed_slider = NodePath("Panel/VBoxContainer/TabContainer/Gameplay/VBoxContainer/TextSpeed/HSlider")
+save_button = NodePath("Panel/VBoxContainer/HBoxContainer/SaveButton")
+close_button = NodePath("Panel/VBoxContainer/HBoxContainer/CloseButton")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0, 0, 0, 0.78)
+
+[node name="Panel" type="Panel" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -250.0
+offset_right = 300.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = -20.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "Options"
+horizontal_alignment = 1
+
+[node name="TabContainer" type="TabContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Audio" type="MarginContainer" parent="Panel/VBoxContainer/TabContainer"]
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/TabContainer/Audio"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="Master" type="HBoxContainer" parent="Panel/VBoxContainer/TabContainer/Audio/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/TabContainer/Audio/VBoxContainer/Master"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Master Volume"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/TabContainer/Audio/VBoxContainer/Master"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="Music" type="HBoxContainer" parent="Panel/VBoxContainer/TabContainer/Audio/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/TabContainer/Audio/VBoxContainer/Music"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Music Volume"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/TabContainer/Audio/VBoxContainer/Music"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 0.8
+
+[node name="SFX" type="HBoxContainer" parent="Panel/VBoxContainer/TabContainer/Audio/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/TabContainer/Audio/VBoxContainer/SFX"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "SFX Volume"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/TabContainer/Audio/VBoxContainer/SFX"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 1.0
+step = 0.05
+value = 1.0
+
+[node name="Video" type="MarginContainer" parent="Panel/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/TabContainer/Video"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="WindowMode" type="HBoxContainer" parent="Panel/VBoxContainer/TabContainer/Video/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/TabContainer/Video/VBoxContainer/WindowMode"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Window Mode"
+
+[node name="OptionButton" type="OptionButton" parent="Panel/VBoxContainer/TabContainer/Video/VBoxContainer/WindowMode"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+item_count = 3
+popup/item_0/text = "Windowed"
+popup/item_0/id = 0
+popup/item_1/text = "Fullscreen"
+popup/item_1/id = 1
+popup/item_2/text = "Exclusive Fullscreen"
+popup/item_2/id = 2
+
+[node name="VSync" type="HBoxContainer" parent="Panel/VBoxContainer/TabContainer/Video/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/TabContainer/Video/VBoxContainer/VSync"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "VSync"
+
+[node name="CheckBox" type="CheckBox" parent="Panel/VBoxContainer/TabContainer/Video/VBoxContainer/VSync"]
+layout_mode = 2
+button_pressed = true
+text = "Enabled"
+
+[node name="Gameplay" type="MarginContainer" parent="Panel/VBoxContainer/TabContainer"]
+visible = false
+layout_mode = 2
+theme_override_constants/margin_left = 20
+theme_override_constants/margin_top = 20
+theme_override_constants/margin_right = 20
+theme_override_constants/margin_bottom = 20
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel/VBoxContainer/TabContainer/Gameplay"]
+layout_mode = 2
+theme_override_constants/separation = 15
+
+[node name="TextSpeed" type="HBoxContainer" parent="Panel/VBoxContainer/TabContainer/Gameplay/VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="Panel/VBoxContainer/TabContainer/Gameplay/VBoxContainer/TextSpeed"]
+layout_mode = 2
+size_flags_horizontal = 3
+text = "Text Speed"
+
+[node name="HSlider" type="HSlider" parent="Panel/VBoxContainer/TabContainer/Gameplay/VBoxContainer/TextSpeed"]
+custom_minimum_size = Vector2(200, 0)
+layout_mode = 2
+size_flags_vertical = 4
+max_value = 2.0
+step = 0.1
+value = 1.0
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel/VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+alignment = 1
+
+[node name="SaveButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+text = "Save"
+
+[node name="CloseButton" type="Button" parent="Panel/VBoxContainer/HBoxContainer"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+text = "Close"

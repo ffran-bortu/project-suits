@@ -1,0 +1,12 @@
+[gd_scene load_steps=2 format=3 uid="uid://grid3d_new"]
+
+[ext_resource type="Script" path="res://scripts/Visual/grid_3d.gd" id="1_grid3d"]
+
+[node name="Grid" type="Node3D"]
+
+[node name="Grid3D" type="Node3D" parent="."]
+script = ExtResource("1_grid3d")
+
+
+
+

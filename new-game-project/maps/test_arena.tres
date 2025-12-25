@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="TacticalMapData" load_steps=2 format=3]
+
+[ext_resource type="Script" path="res://scripts/Resources/tactical_map_data.gd" id="1"]
+
+[resource]
+script = ExtResource("1")
+map_name = "Test Arena"
+grid_width = 8
+grid_height = 8
+height_map = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
